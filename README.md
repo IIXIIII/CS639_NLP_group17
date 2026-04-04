@@ -49,3 +49,27 @@ report/ project report
 2. Perform exploratory **dataset analysis**  
 3. Analyze common **failure modes** in multi-step tasks  
 4. Explore potential improvements for agent performance
+
+
+---
+
+## Command
+
+
+
+```
+
+wget -q https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && echo "Downloaded successfully"
+bash /tmp/miniconda.sh 
+
+
+systemctl --user start docker
+
+cd /home/jingyuh/CS639_NLP_group17
+docker build -t local-os/default -f data/os_interaction/res/dockerfiles/default data/os_interaction/res/dockerfiles/
+
+python -m src.start_task -a --config configs/start_task.yaml
+
+
+python -m src.assigner --config configs/assignments/default.yaml
+```
