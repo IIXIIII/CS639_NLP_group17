@@ -185,18 +185,23 @@ class HTTPAgent(AgentClient):
     def _handle_history(self, history: List[dict]) -> Dict[str, Any]:
         return self.prompter(history)
 
-    def inference(self, history: List[dict]) -> str:
+    def inference(self, history: List[dict], tools=None):
         for _ in range(3):
             try:
                 body = self.body.copy()
-                body.update(self._handle_history(history))
+                if tools:
+                    # New function-calling API: pass messages and tools directly in OpenAI format
+                    body["messages"] = history
+                    body["tools"] = tools
+                    body["tool_choice"] = "auto"
+                else:
+                    body.update(self._handle_history(history))
                 with no_ssl_verification():
                     resp = requests.post(
                         self.url, json=body, headers=self.headers, proxies=self.proxies, timeout=120
                     )
-                # print(resp.status_code, resp.text)
                 if resp.status_code != 200:
-                    # print(resp.text)
+                    print(f"[HTTPAgent] API error {resp.status_code}: {resp.text[:500]}")
                     if check_context_limit(resp.text):
                         raise AgentContextLimitException(resp.text)
                     else:
@@ -210,6 +215,10 @@ class HTTPAgent(AgentClient):
                 pass
             else:
                 resp = resp.json()
+                if tools:
+                    # Return the assistant message object as a list (contains tool_calls)
+                    message = resp["choices"][0]["message"]
+                    return [message]
                 return self.return_format.format(response=resp)
             time.sleep(_ + 2)
         raise Exception("Failed.")

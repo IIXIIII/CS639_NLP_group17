@@ -24,9 +24,10 @@ class OSEnvironmentDelegation(EnvironmentDelegation):
         attrs['AttachStdout'] = False
         attrs['AttachStderr'] = False
         attrs['WorkingDir'] = '/root'
-        attrs['HostConfig']['Memory'] = 1024 * 1024 * 1024  # 1GB RAM
-        attrs['HostConfig']['MemorySwap'] = attrs['HostConfig']['Memory']  # disable swap
-        attrs['HostConfig']['NanoCpus'] = 2_000_000_000  # 2 vCPUs
+        # Resource limits disabled: rootless Docker does not support CPU CFS scheduler or cgroup memory limits
+        # attrs['HostConfig']['Memory'] = 1024 * 1024 * 1024  # 1GB RAM
+        # attrs['HostConfig']['MemorySwap'] = attrs['HostConfig']['Memory']  # disable swap
+        # attrs['HostConfig']['NanoCpus'] = 2_000_000_000  # 2 vCPUs
         return attrs
 
     def get_container_images(self) -> Dict[str, str]:

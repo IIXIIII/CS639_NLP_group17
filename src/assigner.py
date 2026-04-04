@@ -359,7 +359,7 @@ class Assigner:
             json.dumps(
                 {
                     "index": index,
-                    **result.dict(),
+                    **result.model_dump(),
                     "time": {"timestamp": timestamp, "str": time_str},
                 }
             )

@@ -59,7 +59,7 @@ default:
       state_driver: redis
       state_options:
         connection:
-          host: 172.17.0.1
+          host: 127.0.0.1
 
 os-std:
   module: "src.server.tasks.os_interaction.OSInteraction"
