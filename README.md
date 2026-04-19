@@ -149,7 +149,7 @@ docker build -t local-os/ubuntu \
 
 ```bash
 export DOCKER_HOST=unix:///run/user/$(id -u)/docker.sock
-docker run --rm -p 5020:5020 jingbh/agentrl-controller:latest controller
+docker run --rm -p 5020:5020 jingyuh/agentrl-controller:latest controller
 ```
 
 Wait until you see:

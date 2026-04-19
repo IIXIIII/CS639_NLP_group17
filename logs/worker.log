@@ -1,0 +1,1007 @@
+[2026-04-19 13:14:19 CDT] [INFO] [__main__.py:37]: Starting task os-std args.config='configs/tasks/os.yaml' args.controller='http://localhost:5020/api' args.self='http://localhost:5021/api' args.port=5021
+[2026-04-19 13:14:19 CDT] [INFO] [__main__.py:40]: Resolved configuration: {'module': 'src.server.tasks.os_interaction.OSInteraction', 'parameters': {'concurrency': 32, 'round_limit': 8, 'tools': [{'type': 'function', 'function': {'name': 'bash_action', 'description': 'Execute bash code to perform an operation in the Linux environment.', 'parameters': {'type': 'object', 'properties': {'script': {'type': 'string', 'description': 'The bash script to be executed.'}}, 'required': ['script'], 'additionalProperties': False}}}, {'type': 'function', 'function': {'name': 'finish_action', 'description': 'Indicate that the task has been finished or need some additional information to be finished.', 'parameters': {'type': 'object', 'properties': {'thought': {'type': 'string', 'description': 'The thought or reason indicating the task is finished.'}}, 'required': ['thought'], 'additionalProperties': False}}}, {'type': 'function', 'function': {'name': 'answer_action', 'description': 'Provide the answer to the question.', 'parameters': {'type': 'object', 'properties': {'answer': {'type': 'string', 'description': 'The answer to the question.'}}, 'required': ['answer'], 'additionalProperties': False}}}], 'docker_config': {'localhost': 'local-os', 'directory': 'data/os_interaction/res/dockerfiles'}, 'scripts': {'directory': 'data/os_interaction/res/scripts'}, 'env_driver': 'docker', 'env_options': {'network_name': 'os_interaction_default', 'state_driver': 'redis', 'state_options': {'connection': {'host': '127.0.0.1'}}}, 'name': 'os-std', 'data_config': {'files': [{'problem_file': 'data/os_interaction/data/1/*.json', 'script_dir': 'data/os_interaction/scripts/1/', 'index_prefix': 'std-001-'}, {'problem_file': 'data/os_interaction/data/2/*.json', 'script_dir': 'data/os_interaction/scripts/2/', 'index_prefix': 'std-002-'}, {'problem_file': 'data/os_interaction/data/3/*.json', 'script_dir': 'data/os_interaction/scripts/3/', 'index_prefix': 'std-003-'}, {'problem_file': 'data/os_interaction/data/4/*.json', 'script_dir': 'data/os_interaction/scripts/4/', 'index_prefix': 'std-004-'}, {'problem_file': 'data/os_interaction/data/5/*.json', 'script_dir': 'data/os_interaction/scripts/5/', 'index_prefix': 'std-005-'}, {'problem_file': 'data/os_interaction/data/6/*.json', 'script_dir': 'data/os_interaction/scripts/6/', 'index_prefix': 'std-006-'}, {'problem_file': 'data/os_interaction/data/7/*.json', 'script_dir': 'data/os_interaction/scripts/7/', 'index_prefix': 'std-007-'}], 'bk': [], 'ignore': []}}}
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:223]: Loading config from: data/os_interaction/data/1/stock.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:283]: Loaded 7 configuration(s) from data/os_interaction/data/1/stock.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:223]: Loading config from: data/os_interaction/data/2/environment.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:283]: Loaded 5 configuration(s) from data/os_interaction/data/2/environment.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:223]: Loading config from: data/os_interaction/data/3/ac.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:283]: Loaded 6 configuration(s) from data/os_interaction/data/3/ac.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:223]: Loading config from: data/os_interaction/data/4/N11.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:283]: Loaded 1 configuration(s) from data/os_interaction/data/4/N11.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:223]: Loading config from: data/os_interaction/data/4/N225.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:283]: Loaded 1 configuration(s) from data/os_interaction/data/4/N225.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:223]: Loading config from: data/os_interaction/data/4/N37.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:283]: Loaded 1 configuration(s) from data/os_interaction/data/4/N37.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:223]: Loading config from: data/os_interaction/data/4/N4.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:283]: Loaded 1 configuration(s) from data/os_interaction/data/4/N4.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:223]: Loading config from: data/os_interaction/data/4/N41.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:283]: Loaded 4 configuration(s) from data/os_interaction/data/4/N41.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:223]: Loading config from: data/os_interaction/data/4/Q09.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:283]: Loaded 1 configuration(s) from data/os_interaction/data/4/Q09.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:223]: Loading config from: data/os_interaction/data/4/Q19.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:283]: Loaded 1 configuration(s) from data/os_interaction/data/4/Q19.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:223]: Loading config from: data/os_interaction/data/4/Q30.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:283]: Loaded 6 configuration(s) from data/os_interaction/data/4/Q30.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:223]: Loading config from: data/os_interaction/data/4/Q47.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:283]: Loaded 1 configuration(s) from data/os_interaction/data/4/Q47.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:223]: Loading config from: data/os_interaction/data/4/Q49.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:283]: Loaded 2 configuration(s) from data/os_interaction/data/4/Q49.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:223]: Loading config from: data/os_interaction/data/5/new.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:283]: Loaded 10 configuration(s) from data/os_interaction/data/5/new.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:223]: Loading config from: data/os_interaction/data/6/new.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:283]: Loaded 9 configuration(s) from data/os_interaction/data/6/new.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:223]: Loading config from: data/os_interaction/data/7/bootstrap.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:283]: Loaded 88 configuration(s) from data/os_interaction/data/7/bootstrap.json
+[2026-04-19 13:14:19 CDT] [INFO] [task.py:196]: Initialized OSInteraction with 144 problem configs
+[2026-04-19 13:14:19 CDT] [INFO] [task_worker.py:105]: Task worker initialized with worker_id: a1ab0381-8578-46f5-a051-1cbc8515998f
+INFO:     Started server process [2671288]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:5021 (Press CTRL+C to quit)
+INFO:     127.0.0.1:41358 - "GET /api/get_sessions HTTP/1.1" 200 OK
+[2026-04-19 13:14:49 CDT] [INFO] [task_worker.py:200]: session 1 start sample for index 142
+[2026-04-19 13:14:49 CDT] [INFO] [task.py:365]: Starting sample with index: 142
+[2026-04-19 13:14:49 CDT] [INFO] [task.py:373]: Initializing container
+[2026-04-19 13:14:49 CDT] [INFO] [task_worker.py:200]: session 2 start sample for index 143
+[2026-04-19 13:14:49 CDT] [INFO] [task.py:365]: Starting sample with index: 143
+[2026-04-19 13:14:49 CDT] [INFO] [task.py:373]: Initializing container
+[2026-04-19 13:14:49 CDT] [WARNING] [docker.py:341]: Error in background task
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 334, in background_task
+    if await self.state.acquire_lock('background', timeout=120):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 108, in acquire_lock
+    return bool(await client.eval(ACQUIRE_LOCK_SCRIPT, 1, key, value, str(timeout)))
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:14:49 CDT] [INFO] [task_worker.py:200]: session 3 start sample for index 141
+[2026-04-19 13:14:49 CDT] [INFO] [task_worker.py:200]: session 4 start sample for index 140
+[2026-04-19 13:14:49 CDT] [INFO] [task_worker.py:200]: session 5 start sample for index 139
+[2026-04-19 13:14:49 CDT] [INFO] [task.py:365]: Starting sample with index: 141
+[2026-04-19 13:14:49 CDT] [INFO] [task.py:373]: Initializing container
+[2026-04-19 13:14:49 CDT] [INFO] [task.py:365]: Starting sample with index: 140
+[2026-04-19 13:14:49 CDT] [INFO] [task.py:373]: Initializing container
+[2026-04-19 13:14:49 CDT] [INFO] [task.py:365]: Starting sample with index: 139
+[2026-04-19 13:14:49 CDT] [INFO] [task.py:373]: Initializing container
+[2026-04-19 13:14:49 CDT] [ERROR] [task.py:387]: Error in start_sample
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 374, in start_sample
+    await container.initialize()
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 39, in initialize
+    res = await self.controller.start_session(self.image)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 141, in start_session
+    await self.state.allocate_container(container.id, session_id)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 119, in allocate_container
+    await client.set(key, 1, ex=self.session_expiry)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:14:49 CDT] [ERROR] [task.py:397]: Error during container cleanup: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:14:49 CDT] [INFO] [task_worker.py:227]: finish start_sample parameters.session_id=2
+INFO:     127.0.0.1:50890 - "POST /api/start_sample HTTP/1.1" 200 OK
+[2026-04-19 13:14:49 CDT] [ERROR] [task.py:387]: Error in start_sample
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 374, in start_sample
+    await container.initialize()
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 39, in initialize
+    res = await self.controller.start_session(self.image)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 141, in start_session
+    await self.state.allocate_container(container.id, session_id)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 119, in allocate_container
+    await client.set(key, 1, ex=self.session_expiry)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:14:49 CDT] [ERROR] [task.py:397]: Error during container cleanup: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:14:49 CDT] [INFO] [task_worker.py:227]: finish start_sample parameters.session_id=5
+INFO:     127.0.0.1:50910 - "POST /api/start_sample HTTP/1.1" 200 OK
+[2026-04-19 13:14:49 CDT] [ERROR] [task.py:387]: Error in start_sample
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 374, in start_sample
+    await container.initialize()
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 39, in initialize
+    res = await self.controller.start_session(self.image)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 141, in start_session
+    await self.state.allocate_container(container.id, session_id)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 119, in allocate_container
+    await client.set(key, 1, ex=self.session_expiry)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:14:49 CDT] [ERROR] [task.py:397]: Error during container cleanup: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:14:49 CDT] [INFO] [task_worker.py:227]: finish start_sample parameters.session_id=4
+INFO:     127.0.0.1:50896 - "POST /api/start_sample HTTP/1.1" 200 OK
+[2026-04-19 13:14:49 CDT] [ERROR] [task.py:387]: Error in start_sample
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 374, in start_sample
+    await container.initialize()
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 39, in initialize
+    res = await self.controller.start_session(self.image)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 141, in start_session
+    await self.state.allocate_container(container.id, session_id)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 119, in allocate_container
+    await client.set(key, 1, ex=self.session_expiry)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:14:49 CDT] [ERROR] [task.py:397]: Error during container cleanup: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:14:49 CDT] [INFO] [task_worker.py:227]: finish start_sample parameters.session_id=1
+INFO:     127.0.0.1:50878 - "POST /api/start_sample HTTP/1.1" 200 OK
+[2026-04-19 13:14:49 CDT] [ERROR] [task.py:387]: Error in start_sample
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 374, in start_sample
+    await container.initialize()
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 39, in initialize
+    res = await self.controller.start_session(self.image)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 141, in start_session
+    await self.state.allocate_container(container.id, session_id)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 119, in allocate_container
+    await client.set(key, 1, ex=self.session_expiry)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:14:49 CDT] [ERROR] [task.py:397]: Error during container cleanup: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:14:49 CDT] [INFO] [task_worker.py:227]: finish start_sample parameters.session_id=3
+INFO:     127.0.0.1:50894 - "POST /api/start_sample HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58604 - "POST /api/cancel HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:58618 - "POST /api/cancel HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:58634 - "POST /api/cancel HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:58650 - "POST /api/cancel HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:58656 - "POST /api/cancel HTTP/1.1" 400 Bad Request
+[2026-04-19 13:14:59 CDT] [WARNING] [docker.py:341]: Error in background task
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 334, in background_task
+    if await self.state.acquire_lock('background', timeout=120):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 108, in acquire_lock
+    return bool(await client.eval(ACQUIRE_LOCK_SCRIPT, 1, key, value, str(timeout)))
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:04 CDT] [INFO] [task_worker.py:200]: session 6 start sample for index 138
+[2026-04-19 13:15:04 CDT] [INFO] [task.py:365]: Starting sample with index: 138
+[2026-04-19 13:15:04 CDT] [INFO] [task.py:373]: Initializing container
+[2026-04-19 13:15:04 CDT] [INFO] [task_worker.py:200]: session 7 start sample for index 136
+[2026-04-19 13:15:04 CDT] [INFO] [task_worker.py:200]: session 8 start sample for index 135
+[2026-04-19 13:15:04 CDT] [INFO] [task_worker.py:200]: session 9 start sample for index 137
+[2026-04-19 13:15:04 CDT] [INFO] [task_worker.py:200]: session 10 start sample for index 134
+[2026-04-19 13:15:04 CDT] [INFO] [task.py:365]: Starting sample with index: 136
+[2026-04-19 13:15:04 CDT] [INFO] [task.py:373]: Initializing container
+[2026-04-19 13:15:04 CDT] [INFO] [task.py:365]: Starting sample with index: 135
+[2026-04-19 13:15:04 CDT] [INFO] [task.py:373]: Initializing container
+[2026-04-19 13:15:04 CDT] [INFO] [task.py:365]: Starting sample with index: 137
+[2026-04-19 13:15:04 CDT] [INFO] [task.py:373]: Initializing container
+[2026-04-19 13:15:04 CDT] [INFO] [task.py:365]: Starting sample with index: 134
+[2026-04-19 13:15:04 CDT] [INFO] [task.py:373]: Initializing container
+[2026-04-19 13:15:04 CDT] [ERROR] [task.py:387]: Error in start_sample
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 374, in start_sample
+    await container.initialize()
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 39, in initialize
+    res = await self.controller.start_session(self.image)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 141, in start_session
+    await self.state.allocate_container(container.id, session_id)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 119, in allocate_container
+    await client.set(key, 1, ex=self.session_expiry)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:04 CDT] [ERROR] [task.py:397]: Error during container cleanup: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:04 CDT] [INFO] [task_worker.py:227]: finish start_sample parameters.session_id=6
+INFO:     127.0.0.1:51580 - "POST /api/start_sample HTTP/1.1" 200 OK
+[2026-04-19 13:15:04 CDT] [ERROR] [task.py:387]: Error in start_sample
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 374, in start_sample
+    await container.initialize()
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 39, in initialize
+    res = await self.controller.start_session(self.image)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 141, in start_session
+    await self.state.allocate_container(container.id, session_id)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 119, in allocate_container
+    await client.set(key, 1, ex=self.session_expiry)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:04 CDT] [ERROR] [task.py:397]: Error during container cleanup: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:04 CDT] [INFO] [task_worker.py:227]: finish start_sample parameters.session_id=9
+INFO:     127.0.0.1:51606 - "POST /api/start_sample HTTP/1.1" 200 OK
+[2026-04-19 13:15:04 CDT] [ERROR] [task.py:387]: Error in start_sample
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 374, in start_sample
+    await container.initialize()
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 39, in initialize
+    res = await self.controller.start_session(self.image)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 141, in start_session
+    await self.state.allocate_container(container.id, session_id)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 119, in allocate_container
+    await client.set(key, 1, ex=self.session_expiry)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:04 CDT] [ERROR] [task.py:397]: Error during container cleanup: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:04 CDT] [INFO] [task_worker.py:227]: finish start_sample parameters.session_id=7
+INFO:     127.0.0.1:51582 - "POST /api/start_sample HTTP/1.1" 200 OK
+[2026-04-19 13:15:04 CDT] [ERROR] [task.py:387]: Error in start_sample
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 374, in start_sample
+    await container.initialize()
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 39, in initialize
+    res = await self.controller.start_session(self.image)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 141, in start_session
+    await self.state.allocate_container(container.id, session_id)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 119, in allocate_container
+    await client.set(key, 1, ex=self.session_expiry)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:04 CDT] [ERROR] [task.py:397]: Error during container cleanup: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:04 CDT] [INFO] [task_worker.py:227]: finish start_sample parameters.session_id=10
+INFO:     127.0.0.1:51614 - "POST /api/start_sample HTTP/1.1" 200 OK
+[2026-04-19 13:15:04 CDT] [ERROR] [task.py:387]: Error in start_sample
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 374, in start_sample
+    await container.initialize()
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 39, in initialize
+    res = await self.controller.start_session(self.image)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 141, in start_session
+    await self.state.allocate_container(container.id, session_id)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 119, in allocate_container
+    await client.set(key, 1, ex=self.session_expiry)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:04 CDT] [ERROR] [task.py:397]: Error during container cleanup: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:04 CDT] [INFO] [task_worker.py:227]: finish start_sample parameters.session_id=8
+INFO:     127.0.0.1:51594 - "POST /api/start_sample HTTP/1.1" 200 OK
+[2026-04-19 13:15:09 CDT] [WARNING] [docker.py:341]: Error in background task
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 334, in background_task
+    if await self.state.acquire_lock('background', timeout=120):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 108, in acquire_lock
+    return bool(await client.eval(ACQUIRE_LOCK_SCRIPT, 1, key, value, str(timeout)))
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+INFO:     127.0.0.1:35678 - "GET /api/get_sessions HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35682 - "POST /api/cancel HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:35694 - "POST /api/cancel HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:35708 - "POST /api/cancel HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:35724 - "POST /api/cancel HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:35726 - "POST /api/cancel HTTP/1.1" 400 Bad Request
+[2026-04-19 13:15:15 CDT] [INFO] [task_worker.py:200]: session 11 start sample for index 133
+[2026-04-19 13:15:15 CDT] [INFO] [task.py:365]: Starting sample with index: 133
+[2026-04-19 13:15:15 CDT] [INFO] [task.py:373]: Initializing container
+[2026-04-19 13:15:15 CDT] [INFO] [task_worker.py:200]: session 12 start sample for index 132
+[2026-04-19 13:15:15 CDT] [INFO] [task.py:365]: Starting sample with index: 132
+[2026-04-19 13:15:15 CDT] [INFO] [task.py:373]: Initializing container
+[2026-04-19 13:15:15 CDT] [INFO] [task_worker.py:200]: session 14 start sample for index 130
+[2026-04-19 13:15:15 CDT] [INFO] [task_worker.py:200]: session 13 start sample for index 131
+[2026-04-19 13:15:15 CDT] [INFO] [task.py:365]: Starting sample with index: 130
+[2026-04-19 13:15:15 CDT] [INFO] [task.py:373]: Initializing container
+[2026-04-19 13:15:15 CDT] [INFO] [task.py:365]: Starting sample with index: 131
+[2026-04-19 13:15:15 CDT] [INFO] [task.py:373]: Initializing container
+[2026-04-19 13:15:15 CDT] [INFO] [task_worker.py:200]: session 15 start sample for index 129
+[2026-04-19 13:15:15 CDT] [INFO] [task.py:365]: Starting sample with index: 129
+[2026-04-19 13:15:15 CDT] [INFO] [task.py:373]: Initializing container
+[2026-04-19 13:15:15 CDT] [ERROR] [task.py:387]: Error in start_sample
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 374, in start_sample
+    await container.initialize()
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 39, in initialize
+    res = await self.controller.start_session(self.image)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 141, in start_session
+    await self.state.allocate_container(container.id, session_id)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 119, in allocate_container
+    await client.set(key, 1, ex=self.session_expiry)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:15 CDT] [ERROR] [task.py:397]: Error during container cleanup: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:15 CDT] [INFO] [task_worker.py:227]: finish start_sample parameters.session_id=11
+INFO:     127.0.0.1:35678 - "POST /api/start_sample HTTP/1.1" 200 OK
+[2026-04-19 13:15:15 CDT] [ERROR] [task.py:387]: Error in start_sample
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 374, in start_sample
+    await container.initialize()
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 39, in initialize
+    res = await self.controller.start_session(self.image)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 141, in start_session
+    await self.state.allocate_container(container.id, session_id)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 119, in allocate_container
+    await client.set(key, 1, ex=self.session_expiry)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:15 CDT] [ERROR] [task.py:397]: Error during container cleanup: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:15 CDT] [INFO] [task_worker.py:227]: finish start_sample parameters.session_id=15
+INFO:     127.0.0.1:35760 - "POST /api/start_sample HTTP/1.1" 200 OK
+[2026-04-19 13:15:15 CDT] [ERROR] [task.py:387]: Error in start_sample
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 374, in start_sample
+    await container.initialize()
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 39, in initialize
+    res = await self.controller.start_session(self.image)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 141, in start_session
+    await self.state.allocate_container(container.id, session_id)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 119, in allocate_container
+    await client.set(key, 1, ex=self.session_expiry)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:15 CDT] [ERROR] [task.py:397]: Error during container cleanup: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:15 CDT] [INFO] [task_worker.py:227]: finish start_sample parameters.session_id=13
+INFO:     127.0.0.1:35758 - "POST /api/start_sample HTTP/1.1" 200 OK
+[2026-04-19 13:15:15 CDT] [ERROR] [task.py:387]: Error in start_sample
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 374, in start_sample
+    await container.initialize()
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 39, in initialize
+    res = await self.controller.start_session(self.image)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 141, in start_session
+    await self.state.allocate_container(container.id, session_id)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 119, in allocate_container
+    await client.set(key, 1, ex=self.session_expiry)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:15 CDT] [ERROR] [task.py:397]: Error during container cleanup: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:15 CDT] [INFO] [task_worker.py:227]: finish start_sample parameters.session_id=12
+INFO:     127.0.0.1:35738 - "POST /api/start_sample HTTP/1.1" 200 OK
+[2026-04-19 13:15:15 CDT] [ERROR] [task.py:387]: Error in start_sample
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 374, in start_sample
+    await container.initialize()
+  File "/home/jingyuh/CS639_NLP_group17/src/server/tasks/os_interaction/task.py", line 39, in initialize
+    res = await self.controller.start_session(self.image)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 141, in start_session
+    await self.state.allocate_container(container.id, session_id)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 119, in allocate_container
+    await client.set(key, 1, ex=self.session_expiry)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:15 CDT] [ERROR] [task.py:397]: Error during container cleanup: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+[2026-04-19 13:15:15 CDT] [INFO] [task_worker.py:227]: finish start_sample parameters.session_id=14
+INFO:     127.0.0.1:35754 - "POST /api/start_sample HTTP/1.1" 200 OK
+[2026-04-19 13:15:19 CDT] [WARNING] [docker.py:341]: Error in background task
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 334, in background_task
+    if await self.state.acquire_lock('background', timeout=120):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 108, in acquire_lock
+    return bool(await client.eval(ACQUIRE_LOCK_SCRIPT, 1, key, value, str(timeout)))
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).
+INFO:     127.0.0.1:36282 - "POST /api/cancel HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:36288 - "POST /api/cancel HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:36298 - "POST /api/cancel HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:36300 - "POST /api/cancel HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:36308 - "POST /api/cancel HTTP/1.1" 400 Bad Request
+[2026-04-19 13:15:29 CDT] [WARNING] [docker.py:341]: Error in background task
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 371, in connect_check_health
+    await self._connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 895, in _connect
+    reader, writer = await asyncio.open_connection(
+  File "/usr/lib/python3.10/asyncio/streams.py", line 48, in open_connection
+    transport, _ = await loop.create_connection(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1076, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 1060, in create_connection
+    sock = await self._connect_sock(
+  File "/usr/lib/python3.10/asyncio/base_events.py", line 969, in _connect_sock
+    await self.sock_connect(sock, address)
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 501, in sock_connect
+    return await fut
+  File "/usr/lib/python3.10/asyncio/selector_events.py", line 541, in _sock_connect_cb
+    raise OSError(err, f'Connect call failed {address}')
+ConnectionRefusedError: [Errno 111] Connect call failed ('127.0.0.1', 6379)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/docker.py", line 334, in background_task
+    if await self.state.acquire_lock('background', timeout=120):
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/agentrl/worker/environment/state/redis.py", line 108, in acquire_lock
+    return bool(await client.eval(ACQUIRE_LOCK_SCRIPT, 1, key, value, str(timeout)))
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/client.py", line 764, in execute_command
+    conn = self.connection or await pool.get_connection()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/utils.py", line 227, in async_wrapper
+    return await func(*args, **kwargs)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1448, in get_connection
+    await self.ensure_connection(connection)
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 1489, in ensure_connection
+    await connection.connect()
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 340, in connect
+    await self.retry.call_with_retry(
+  File "/home/jingyuh/myenv/lib/python3.10/site-packages/redis/asyncio/connection.py", line 397, in connect_check_health
+    raise e
+redis.exceptions.ConnectionError: Error 111 connecting to 127.0.0.1:6379. Connect call failed ('127.0.0.1', 6379).

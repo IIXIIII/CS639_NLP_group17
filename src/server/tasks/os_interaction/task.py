@@ -521,7 +521,17 @@ Attention, your bash code should not contain any input operation. Once again, yo
 Note that if you think the task has been finished, or there is some message missing to completely complete the task, you should respond with calling the function "finish_action", as no additional information will be provided.
 Also, note that if you have gotten the answer to the question, you should call the "answer_action" tool instead of simply writing your answer in your response.
 Your answers should be exact and precise (for example, a single number), do not answer with full sentences or phrases.
-Always use a tool provided instead of simply responding with content."""
+Always use a tool provided instead of simply responding with content.
+
+Additional guidelines:
+1. Before operating on any file or directory, first use "find" or "ls" commands to confirm it exists and locate its actual path. Do not assume file paths based on the task description alone.
+2. NEVER use any heredoc syntax (<<, <<EOF, <<'EOF', <<"EOF", <<SH, <<'SH', etc.) for ANY purpose — not in bash scripts and not for writing to files. The << operator does not work correctly in this environment and will print content to stdout instead of writing to the file. To write content to a file, use: printf 'line1\nline2\n' > file.sh  OR  echo 'line1' > file.sh && echo 'line2' >> file.sh
+3. If the task asks you to create a script that produces some output, you must also execute that script and provide the actual result as your answer — not just confirm that the script was created.
+4. Before calling answer_action, verify your answer with at least one cross-check command (e.g., re-run the query or confirm the file/directory exists). Do not accept a result of 0 or empty without first confirming that the target files or directories actually exist at the path you searched.
+5. NEVER use set -e, set -u, set -o pipefail, set -euo pipefail, or any error-exit shell options. These cause scripts to silently abort with empty output when any command fails. Run each command independently instead.
+6. NEVER use echo $((expression)) for arithmetic — arithmetic expansion $((...)) is unreliable in this environment and returns empty output. Use python3 -c 'print(54+45)' or expr 54 + 45 instead.
+7. Commit to your answer as soon as you have a consistent result. If the same command or two independent methods give the same numerical result, that IS the answer — call answer_action immediately. Never run the same or equivalent query more than twice. Do not keep second-guessing a consistent result.
+8. Your answer must be a plain number or short value only. Never include equations, labels, or intermediate steps (answer '100', not '4+13+83=100' or 'total=100'). If a task asks for a computed total, compute it first with a command and submit only the resulting number."""
 
         session.inject(ChatCompletionSystemMessageParam(
             role='system',

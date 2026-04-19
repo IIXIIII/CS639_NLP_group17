@@ -1,0 +1,64 @@
+{"level":"info","ts":1776622453.0236905,"logger":"server","caller":"server/serve.go:54","msg":"gRPC server started at :5020"}
+{"level":"info","ts":1776622453.0238657,"logger":"server","caller":"server/serve.go:66","msg":"HTTP server started at :5020"}
+{"level":"info","ts":1776622459.2949991,"logger":"controller","caller":"controller/task.go:71","msg":"task os-std registered with 144 indices"}
+{"level":"info","ts":1776622459.2951238,"logger":"controller","caller":"controller/task.go:144","msg":"worker os-std#1 registered"}
+{"level":"info","ts":1776622489.200909,"logger":"controller","caller":"controller/task.go:271","msg":"Selected worker 1 for task os-std, load: 1/32"}
+{"level":"info","ts":1776622489.2010176,"logger":"controller","caller":"controller/session.go:192","msg":"Created session 1 for task os-std, index 142, worker 1"}
+{"level":"info","ts":1776622489.2012768,"logger":"controller","caller":"controller/task.go:271","msg":"Selected worker 1 for task os-std, load: 2/32"}
+{"level":"info","ts":1776622489.2013721,"logger":"controller","caller":"controller/session.go:192","msg":"Created session 2 for task os-std, index 143, worker 1"}
+{"level":"info","ts":1776622489.2026942,"logger":"controller","caller":"controller/task.go:271","msg":"Selected worker 1 for task os-std, load: 3/32"}
+{"level":"info","ts":1776622489.2027378,"logger":"controller","caller":"controller/session.go:192","msg":"Created session 3 for task os-std, index 141, worker 1"}
+{"level":"info","ts":1776622489.2041862,"logger":"controller","caller":"controller/task.go:271","msg":"Selected worker 1 for task os-std, load: 4/32"}
+{"level":"info","ts":1776622489.2042277,"logger":"controller","caller":"controller/session.go:192","msg":"Created session 4 for task os-std, index 140, worker 1"}
+{"level":"info","ts":1776622489.2052333,"logger":"controller","caller":"controller/task.go:271","msg":"Selected worker 1 for task os-std, load: 5/32"}
+{"level":"info","ts":1776622489.205285,"logger":"controller","caller":"controller/session.go:192","msg":"Created session 5 for task os-std, index 139, worker 1"}
+{"level":"info","ts":1776622489.4831073,"logger":"controller","caller":"controller/session.go:141","msg":"Session 2 finished with status task error"}
+{"level":"info","ts":1776622489.483171,"logger":"controller","caller":"controller/session.go:335","msg":"session 2 marked as finished"}
+{"level":"info","ts":1776622489.5723763,"logger":"controller","caller":"controller/session.go:141","msg":"Session 5 finished with status task error"}
+{"level":"info","ts":1776622489.572454,"logger":"controller","caller":"controller/session.go:335","msg":"session 5 marked as finished"}
+{"level":"info","ts":1776622489.6722522,"logger":"controller","caller":"controller/session.go:141","msg":"Session 4 finished with status task error"}
+{"level":"info","ts":1776622489.6723258,"logger":"controller","caller":"controller/session.go:335","msg":"session 4 marked as finished"}
+{"level":"info","ts":1776622489.6755846,"logger":"controller","caller":"controller/session.go:141","msg":"Session 1 finished with status task error"}
+{"level":"info","ts":1776622489.675673,"logger":"controller","caller":"controller/session.go:335","msg":"session 1 marked as finished"}
+{"level":"info","ts":1776622489.7186296,"logger":"controller","caller":"controller/session.go:141","msg":"Session 3 finished with status task error"}
+{"level":"info","ts":1776622489.718781,"logger":"controller","caller":"controller/session.go:335","msg":"session 3 marked as finished"}
+{"level":"info","ts":1776622504.2082596,"logger":"controller","caller":"controller/task.go:271","msg":"Selected worker 1 for task os-std, load: 1/32"}
+{"level":"info","ts":1776622504.2085123,"logger":"controller","caller":"controller/session.go:192","msg":"Created session 6 for task os-std, index 138, worker 1"}
+{"level":"info","ts":1776622504.2149107,"logger":"controller","caller":"controller/task.go:271","msg":"Selected worker 1 for task os-std, load: 2/32"}
+{"level":"info","ts":1776622504.2149973,"logger":"controller","caller":"controller/session.go:192","msg":"Created session 7 for task os-std, index 136, worker 1"}
+{"level":"info","ts":1776622504.2150855,"logger":"controller","caller":"controller/task.go:271","msg":"Selected worker 1 for task os-std, load: 3/32"}
+{"level":"info","ts":1776622504.215191,"logger":"controller","caller":"controller/session.go:192","msg":"Created session 8 for task os-std, index 135, worker 1"}
+{"level":"info","ts":1776622504.2175488,"logger":"controller","caller":"controller/task.go:271","msg":"Selected worker 1 for task os-std, load: 4/32"}
+{"level":"info","ts":1776622504.2176414,"logger":"controller","caller":"controller/session.go:192","msg":"Created session 9 for task os-std, index 137, worker 1"}
+{"level":"info","ts":1776622504.2188935,"logger":"controller","caller":"controller/task.go:271","msg":"Selected worker 1 for task os-std, load: 5/32"}
+{"level":"info","ts":1776622504.2189581,"logger":"controller","caller":"controller/session.go:192","msg":"Created session 10 for task os-std, index 134, worker 1"}
+{"level":"info","ts":1776622504.4961696,"logger":"controller","caller":"controller/session.go:141","msg":"Session 6 finished with status task error"}
+{"level":"info","ts":1776622504.49624,"logger":"controller","caller":"controller/session.go:335","msg":"session 6 marked as finished"}
+{"level":"info","ts":1776622504.5600674,"logger":"controller","caller":"controller/session.go:141","msg":"Session 9 finished with status task error"}
+{"level":"info","ts":1776622504.560189,"logger":"controller","caller":"controller/session.go:335","msg":"session 9 marked as finished"}
+{"level":"info","ts":1776622504.610905,"logger":"controller","caller":"controller/session.go:141","msg":"Session 7 finished with status task error"}
+{"level":"info","ts":1776622504.61102,"logger":"controller","caller":"controller/session.go:335","msg":"session 7 marked as finished"}
+{"level":"info","ts":1776622504.6723711,"logger":"controller","caller":"controller/session.go:141","msg":"Session 10 finished with status task error"}
+{"level":"info","ts":1776622504.6724532,"logger":"controller","caller":"controller/session.go:335","msg":"session 10 marked as finished"}
+{"level":"info","ts":1776622504.7272043,"logger":"controller","caller":"controller/session.go:141","msg":"Session 8 finished with status task error"}
+{"level":"info","ts":1776622504.727367,"logger":"controller","caller":"controller/session.go:335","msg":"session 8 marked as finished"}
+{"level":"info","ts":1776622515.2430732,"logger":"controller","caller":"controller/task.go:271","msg":"Selected worker 1 for task os-std, load: 1/32"}
+{"level":"info","ts":1776622515.2431905,"logger":"controller","caller":"controller/session.go:192","msg":"Created session 11 for task os-std, index 133, worker 1"}
+{"level":"info","ts":1776622515.248454,"logger":"controller","caller":"controller/task.go:271","msg":"Selected worker 1 for task os-std, load: 2/32"}
+{"level":"info","ts":1776622515.248626,"logger":"controller","caller":"controller/session.go:192","msg":"Created session 12 for task os-std, index 132, worker 1"}
+{"level":"info","ts":1776622515.2541683,"logger":"controller","caller":"controller/task.go:271","msg":"Selected worker 1 for task os-std, load: 3/32"}
+{"level":"info","ts":1776622515.2543595,"logger":"controller","caller":"controller/session.go:192","msg":"Created session 13 for task os-std, index 131, worker 1"}
+{"level":"info","ts":1776622515.2550147,"logger":"controller","caller":"controller/task.go:271","msg":"Selected worker 1 for task os-std, load: 4/32"}
+{"level":"info","ts":1776622515.2551694,"logger":"controller","caller":"controller/session.go:192","msg":"Created session 14 for task os-std, index 130, worker 1"}
+{"level":"info","ts":1776622515.2572048,"logger":"controller","caller":"controller/task.go:271","msg":"Selected worker 1 for task os-std, load: 5/32"}
+{"level":"info","ts":1776622515.257355,"logger":"controller","caller":"controller/session.go:192","msg":"Created session 15 for task os-std, index 129, worker 1"}
+{"level":"info","ts":1776622515.5109348,"logger":"controller","caller":"controller/session.go:141","msg":"Session 11 finished with status task error"}
+{"level":"info","ts":1776622515.5110433,"logger":"controller","caller":"controller/session.go:335","msg":"session 11 marked as finished"}
+{"level":"info","ts":1776622515.586506,"logger":"controller","caller":"controller/session.go:141","msg":"Session 15 finished with status task error"}
+{"level":"info","ts":1776622515.5865946,"logger":"controller","caller":"controller/session.go:335","msg":"session 15 marked as finished"}
+{"level":"info","ts":1776622515.6499264,"logger":"controller","caller":"controller/session.go:141","msg":"Session 13 finished with status task error"}
+{"level":"info","ts":1776622515.6500127,"logger":"controller","caller":"controller/session.go:335","msg":"session 13 marked as finished"}
+{"level":"info","ts":1776622515.7011116,"logger":"controller","caller":"controller/session.go:141","msg":"Session 12 finished with status task error"}
+{"level":"info","ts":1776622515.7012062,"logger":"controller","caller":"controller/session.go:335","msg":"session 12 marked as finished"}
+{"level":"info","ts":1776622515.749649,"logger":"controller","caller":"controller/session.go:141","msg":"Session 14 finished with status task error"}
+{"level":"info","ts":1776622515.7497392,"logger":"controller","caller":"controller/session.go:335","msg":"session 14 marked as finished"}

@@ -355,8 +355,24 @@ def main():
     # Print to terminal
     print(report)
 
-    # Determine output directory
-    out_dir = args.output_dir if args.output_dir else str(Path(runs_path).parent)
+    # Determine output directory:
+    # If --output-dir is given explicitly, use it directly (no subdirectory added).
+    # Otherwise, derive a unique subdirectory from the runs.jsonl path so that
+    # multiple runs never overwrite each other.
+    #   e.g. outputs/2026-04-04-17-03-53/gpt-5.4-nano/os-std/runs.jsonl
+    #        → analysis/2026-04-04-17-03-53_gpt-5.4-nano/
+    if args.output_dir != parser.get_default("output_dir"):
+        out_dir = args.output_dir
+    else:
+        p = Path(runs_path)
+        # parts[-4] = timestamp, parts[-3] = model name
+        try:
+            run_tag = f"{p.parts[-4]}_{p.parts[-3]}"
+        except IndexError:
+            run_tag = p.parent.name
+        base_dir = Path(__file__).parent  # analysis/
+        out_dir = str(base_dir / run_tag)
+
     figures_dir = os.path.join(out_dir, "figures")
     os.makedirs(figures_dir, exist_ok=True)
 
