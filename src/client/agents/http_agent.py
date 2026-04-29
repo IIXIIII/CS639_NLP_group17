@@ -202,7 +202,12 @@ class HTTPAgent(AgentClient):
                     )
                 if resp.status_code != 200:
                     print(f"[HTTPAgent] API error {resp.status_code}: {resp.text[:500]}")
-                    if check_context_limit(resp.text):
+                    if resp.status_code in (429, 503):
+                        wait = 30 if resp.status_code == 429 else 15
+                        print(f"[HTTPAgent] {resp.status_code} error, sleeping {wait}s before retry...")
+                        time.sleep(wait)
+                        raise Exception(f"Transient error {resp.status_code}: {resp.text[:200]}")
+                    elif check_context_limit(resp.text):
                         raise AgentContextLimitException(resp.text)
                     else:
                         raise Exception(

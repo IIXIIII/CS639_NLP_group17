@@ -6,6 +6,20 @@ gpt-5.4-nano:
             model: "gpt-5.4-nano"
             max_completion_tokens: 4096
 
+claude-haiku:
+    import: "./claude-chat.yaml"
+    parameters:
+        name: "claude-haiku"
+        body:
+            model: "claude-haiku-4-5-20251001"
+
+gemini-2.5-flash:
+    import: "./gemini-chat.yaml"
+    parameters:
+        name: "gemini-2.5-flash"
+        body:
+            model: "gemini-2.5-flash"
+
 text-davinci-003:
     import: "./openai-text.yaml"
     parameters:

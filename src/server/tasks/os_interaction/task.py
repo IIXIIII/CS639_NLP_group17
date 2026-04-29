@@ -152,9 +152,11 @@ class OSInteraction(Task):
                  tools=None,
                  env_driver: str = 'docker',
                  env_options: Optional[dict] = None,
+                 prompt_variant: str = 'optimized',
                  **kwargs):
         super().__init__(**kwargs)
         self.round_limit: int = round_limit
+        self.prompt_variant = prompt_variant
         self.data_config = data_config
         self.docker_config = docker_config
         self.tools = tools
@@ -512,7 +514,16 @@ class OSInteraction(Task):
 
     def _inject_initial_messages(self, session: Session, description: str) -> None:
         """注入系统消息和问题描述"""
-        # 系统消息
+        system_message_original = """You are an assistant that will act like a person. I will play the role of a Linux (Ubuntu) operating system.
+Your goal is to implement the operations required by me or answer the questions proposed by me.
+For each of your turns, you should first think about what you should do, and then call exactly one of the provided tools according to the situation.
+If you think the output is too long, I will truncate it. The truncated output is not complete. You have to deal with the truncating problem by yourself.
+Attention, your bash code should not contain any input operation. Once again, you should use one tool in each turn, and should not respond without function calling.
+Note that if you think the task has been finished, or there is some message missing to completely complete the task, you should respond with calling the function "finish_action", as no additional information will be provided.
+Also, note that if you have gotten the answer to the question, you should call the "answer_action" tool instead of simply writing your answer in your response.
+Your answers should be exact and precise (for example, a single number), do not answer with full sentences or phrases.
+Always use a tool provided instead of simply responding with content."""
+
         system_message = """You are an assistant that will act like a person. I will play the role of a Linux (Ubuntu) operating system.
 Your goal is to implement the operations required by me or answer the questions proposed by me.
 For each of your turns, you should first think about what you should do, and then call exactly one of the provided tools according to the situation.
@@ -533,9 +544,10 @@ Additional guidelines:
 7. Commit to your answer as soon as you have a consistent result. If the same command or two independent methods give the same numerical result, that IS the answer — call answer_action immediately. Never run the same or equivalent query more than twice. Do not keep second-guessing a consistent result.
 8. Your answer must be a plain number or short value only. Never include equations, labels, or intermediate steps (answer '100', not '4+13+83=100' or 'total=100'). If a task asks for a computed total, compute it first with a command and submit only the resulting number."""
 
+        chosen = system_message if self.prompt_variant == 'optimized' else system_message_original
         session.inject(ChatCompletionSystemMessageParam(
             role='system',
-            content=system_message
+            content=chosen
         ))
         session.inject(ChatCompletionUserMessageParam(
             role='user',

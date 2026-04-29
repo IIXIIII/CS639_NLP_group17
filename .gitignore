@@ -1,2 +1,4 @@
 configs/agents/openai-chat.yaml
 config.yaml
+configs/agents/claude-chat.yaml
+configs/agents/gemini-chat.yaml
