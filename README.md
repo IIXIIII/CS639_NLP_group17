@@ -147,9 +147,11 @@ docker build -t local-os/ubuntu \
 
 **Terminal 1 — Start the AgentRL Controller:**
 
+> **Important:** The controller must run as a local binary, **not** via `docker run`. A containerized controller cannot reach the worker processes on the host.
+
 ```bash
 export DOCKER_HOST=unix:///run/user/$(id -u)/docker.sock
-docker run --rm -p 5020:5020 jingyuh/agentrl-controller:latest controller
+/home/jingyuh/agentrl-controller controller
 ```
 
 Wait until you see:
@@ -215,3 +217,5 @@ The framework consists of three components running simultaneously:
 | `Connection refused` on port 5020 | Controller not running | Start controller first (Terminal 1) |
 | `permission denied` on Docker socket | Wrong `DOCKER_HOST` or daemon not started | Run `systemctl --user start docker` and set `DOCKER_HOST` |
 | `path not found` for dockerfiles | Wrong working directory | Make sure you are in the repo root (`cd CS639_NLP_group17`) |
+| `Invalid 'messages': empty array` | Redis not running — worker stores session state in Redis; without it conversation history is lost and an empty message array is sent to the API | Run `docker start redis` (if container exists) or `docker run -d --name redis -p 6379:6379 redis:7`, then restart the worker |
+| Controller cannot reach workers / `Connection refused` from inside Docker | Controller started with `docker run` instead of the local binary | Stop the Docker-based controller and run `/home/jingyuh/agentrl-controller controller` directly on the host |
