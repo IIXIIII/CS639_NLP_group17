@@ -1,0 +1,62 @@
+Results from : outputs/2026-04-29-00-01-35/gpt-5.4-nano/os-std/runs.jsonl
+Model        : gpt-5.4-nano
+
+==================================================
+  ACCURACY
+==================================================
+  Total tasks : 144
+  Passed      : 51
+  Failed      : 93
+  Accuracy    : 35.4%
+==================================================
+  INTERACTION ROUNDS
+==================================================
+  Mean   : 2.79
+  Min    : 1
+  Max    : 8
+
+  Distribution:
+     1 rounds : █ (1)
+     2 rounds : █████████████████████████████████████████████████████████████████████████████████████████████████████ (101)
+     3 rounds : ███████████████ (15)
+     4 rounds : █████ (5)
+     5 rounds : ███████████ (11)
+     6 rounds : ████ (4)
+     7 rounds : █ (1)
+     8 rounds : ██████ (6)
+==================================================
+  AVG ROUNDS: PASSED vs FAILED
+==================================================
+  Passed tasks avg rounds : 2.71
+  Failed tasks avg rounds : 2.84
+==================================================
+  TOOL CALL USAGE
+==================================================
+  bash_action                266  (66.2%)
+  answer_action               95  (23.6%)
+  finish_action               41  (10.2%)
+==================================================
+  FINAL ACTION BREAKDOWN
+==================================================
+  Action                     Total  Passed     Acc
+  ------------------------- ------ ------- -------
+  answer_action                 95      50   52.6%
+  bash_action                    8       0    0.0%
+  finish_action                 41       1    2.4%
+==================================================
+  FAILURE ANALYSIS
+==================================================
+  Total failed: 93
+
+  Failed tasks by round count:
+     1 rounds : 1
+     2 rounds : 63
+     3 rounds : 12
+     4 rounds : 4
+     5 rounds : 4
+     6 rounds : 3
+     7 rounds : 1
+     8 rounds : 5
+
+  Hit round limit (8 rounds) and failed: 5
+  Failed in < 3 rounds: 64

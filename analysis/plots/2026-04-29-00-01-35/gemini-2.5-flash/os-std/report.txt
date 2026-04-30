@@ -1,0 +1,62 @@
+Results from : outputs/2026-04-29-00-01-35/gemini-2.5-flash/os-std/runs.jsonl
+Model        : gemini-2.5-flash
+
+==================================================
+  ACCURACY
+==================================================
+  Total tasks : 144
+  Passed      : 61
+  Failed      : 83
+  Accuracy    : 42.4%
+==================================================
+  INTERACTION ROUNDS
+==================================================
+  Mean   : 4.33
+  Min    : 1
+  Max    : 8
+
+  Distribution:
+     1 rounds : █ (1)
+     2 rounds : █████████████████████████████████████████████████████████████ (61)
+     3 rounds : ████████████████████ (20)
+     4 rounds : ███████ (7)
+     5 rounds : ████ (4)
+     6 rounds : █████ (5)
+     7 rounds : █████ (5)
+     8 rounds : █████████████████████████████████████████ (41)
+==================================================
+  AVG ROUNDS: PASSED vs FAILED
+==================================================
+  Passed tasks avg rounds : 3.16
+  Failed tasks avg rounds : 5.19
+==================================================
+  TOOL CALL USAGE
+==================================================
+  bash_action                514  (82.5%)
+  answer_action               99  (15.9%)
+  finish_action               10  (1.6%)
+==================================================
+  FINAL ACTION BREAKDOWN
+==================================================
+  Action                     Total  Passed     Acc
+  ------------------------- ------ ------- -------
+  answer_action                 99      60   60.6%
+  bash_action                   35       0    0.0%
+  finish_action                 10       1   10.0%
+==================================================
+  FAILURE ANALYSIS
+==================================================
+  Total failed: 83
+
+  Failed tasks by round count:
+     1 rounds : 1
+     2 rounds : 25
+     3 rounds : 9
+     4 rounds : 4
+     5 rounds : 3
+     6 rounds : 2
+     7 rounds : 2
+     8 rounds : 37
+
+  Hit round limit (8 rounds) and failed: 37
+  Failed in < 3 rounds: 26
