@@ -20,16 +20,29 @@ Our goal is to study how LLM agents perform in **interactive command-line tasks*
 
 ## Project Overview
 
-This project investigates the generalization ability of **LLM-based agents** in interactive environments.
+This project investigates the failure modes of **LLM-based agents** on the
+**Operating System (OS) domain of AgentBench**, where an agent must translate
+a natural-language instruction into a sequence of executable **bash commands**
+under an 8-round interaction cap.
 
-We use the **Operating System (OS) domain of AgentBench**, where an agent must translate natural language instructions into executable **bash commands** and interact with the system environment.
-
-Tasks involve:
+Tasks fall into two types:
 
 - Retrieving information from the system (**QA tasks**)
 - Modifying system state using shell commands (**operation tasks**)
 
-The OS benchmark contains **144 test tasks** with an average of **~8 interaction rounds per task**.
+The OS benchmark contains **144 evaluation tasks**. We evaluate two
+proprietary LLM agents — **gpt-5.4-nano** and **gemini-2.5-flash** —
+under both:
+
+- the **original AgentBench prompt** (`os-std`), and
+- an **optimized prompt** (`os-std-opt`) that augments the system message
+  with eight behavioral guidelines targeting commonly observed failure modes.
+
+We then apply a **seven-category automatic failure taxonomy** to every
+failed trajectory to characterize *which* failure modes the optimized prompt
+mitigates and *which* it amplifies. Our central finding is that prompt-only
+intervention does not strictly improve agent behavior; instead, it
+**redistributes** failures across categories.
 
 ---
 
@@ -43,11 +56,12 @@ CS639_NLP_group17/
 │   ├── client/                  # Agent & TaskClient implementations
 │   │   └── agents/              # HTTPAgent, ClaudeAgent, etc.
 │   ├── server/tasks/
-│   │   └── os_interaction/      # OS task logic (Docker + bash interaction loop)
+│   │   └── os_interaction/      # OS task logic (Docker + bash interaction loop;
+│   │                            #   contains both os-std and os-std-opt prompts)
 │   ├── typings/                 # Data structures and type definitions
 │   └── utils/                   # Max-flow algorithm, helpers
 ├── configs/
-│   ├── tasks/os.yaml            # OS task definition (tools, docker image, data paths)
+│   ├── tasks/os.yaml            # OS task definition (defines os-std and os-std-opt)
 │   ├── assignments/default.yaml # Which agent runs which task
 │   ├── assignments/definition.yaml # Agent & task factory config
 │   └── agents/openai-chat.yaml  # OpenAI API agent config (put API key here)
@@ -55,6 +69,16 @@ CS639_NLP_group17/
 │   ├── data/                    # 144 task JSON files (7 categories)
 │   ├── scripts/                 # Init, check, and example scripts per category
 │   └── res/dockerfiles/         # Docker image definitions for task environments
+├── outputs/                     # Run outputs, organized by timestamp/model/prompt/
+│   └── <ts>/<model>/<prompt>/runs.jsonl
+├── analysis/                    # Post-run analysis tooling and figures
+│   ├── analyze_results.py       # Per-run accuracy, round, tool-usage breakdowns
+│   ├── failure_taxonomy.py      # 7-category automatic failure classifier
+│   ├── rounds_comparison.py     # Comparative rounds histogram (std vs opt)
+│   ├── plots/                   # Per-config figures
+│   └── figures/                 # Cross-config figures (e.g. rounds_comparison.png)
+├── 639_HW5/
+│   └── latex/                   # ACL-style report sources (acl_latex.tex, custom.bib)
 ├── extra/
 │   └── docker-compose.yml       # Reference compose file (not used in our setup)
 └── requirements.txt
@@ -64,10 +88,34 @@ CS639_NLP_group17/
 
 ## Project Goals
 
-1. Run baseline evaluations of LLM agents on OS tasks
-2. Perform exploratory **dataset analysis**
-3. Analyze common **failure modes** in multi-step tasks
-4. Explore potential improvements for agent performance
+1. Replicate the AgentBench-OS evaluation with two contemporary proprietary
+   LLMs (gpt-5.4-nano and gemini-2.5-flash) under the original AgentBench
+   prompt.
+2. Construct an optimized prompt (`os-std-opt`) augmenting the system
+   message with eight behavioral guidelines targeting common agent failure
+   modes, and re-evaluate both models under it.
+3. Build a seven-category **automatic failure taxonomy** that classifies
+   every failed trajectory by inspecting its action sequence, enabling
+   reproducible analysis from `runs.jsonl` alone.
+4. Characterize **how** prompt-only intervention changes agent behavior:
+   does it monotonically reduce failures, or does it redistribute them
+   across categories?
+
+## Key Results
+
+| Model              | `os-std` | `os-std-opt` |  Δ        |
+|--------------------|---------:|-------------:|----------:|
+| gpt-5.4-nano       |   35.4 % |       46.5 % |  +11.1 pp |
+| gemini-2.5-flash   |   42.4 % |       49.3 % |   +6.9 pp |
+
+The optimized prompt yields consistent gains, but more than half of all 144
+tasks still fail under every configuration. The failure taxonomy reveals
+that the gains come from collapsing **under-exploration failures** (Premature
+Finish, Snap Wrong Answer) — at the cost of new **Round-Limit Exhaustion**
+and **Repetitive Bash** failures. The dominant failure mode is
+model-specific, and prompt-only intervention does not strictly improve
+behavior — it redistributes it. See `639_HW5/latex/acl_latex.tex` for the
+full analysis.
 
 ---
 
@@ -169,6 +217,21 @@ python -m agentrl.worker os-std \
   --self http://localhost:5021/api
 ```
 
+To run the optimized prompt variant instead, replace `os-std` with
+`os-std-opt`:
+
+```bash
+python -m agentrl.worker os-std-opt \
+  --config configs/tasks/os.yaml \
+  --controller http://localhost:5020/api \
+  --self http://localhost:5021/api
+```
+
+Both variants are defined in `configs/tasks/os.yaml`; they share the same
+144 tasks, tool definitions, and 8-round cap, and differ only in the system
+message (the optimized variant appends eight additional behavioral
+guidelines).
+
 Wait until you see the worker registered successfully.
 
 **Terminal 3 — Run the Assigner (starts evaluation):**
@@ -177,6 +240,10 @@ Wait until you see the worker registered successfully.
 export DOCKER_HOST=unix:///run/user/$(id -u)/docker.sock
 python -m src.assigner --config configs/assignments/default.yaml
 ```
+
+Edit `configs/assignments/default.yaml` to select which model
+(`gpt-5.4-nano` or `gemini-2.5-flash`) and which task variant (`os-std`
+or `os-std-opt`) to run.
 
 ### Step 8: View results
 
@@ -206,6 +273,52 @@ The framework consists of three components running simultaneously:
 - **Controller** (`jingbh/agentrl-controller`): routes messages between assigner and workers
 - **Task Worker** (`agentrl.worker`): manages Docker containers and runs the interaction loop
 - **Assigner** (`src.assigner`): sends tasks to workers and collects results via the LLM agent
+
+---
+
+## Analysis
+
+Once `runs.jsonl` files have been produced under `outputs/<timestamp>/`, the
+scripts in `analysis/` reproduce all of the figures and statistics reported
+in the paper.
+
+### Per-run report (`analysis/analyze_results.py`)
+
+For a single configuration, prints accuracy, mean rounds, tool-usage
+breakdown, final-action breakdown, and per-round failure distribution; also
+saves PNG plots:
+
+```bash
+python analysis/analyze_results.py \
+  --runs outputs/<timestamp>/<model>/<prompt>/runs.jsonl
+```
+
+If `--runs` is omitted, the latest run under `outputs/` is used. Output is
+written to `analysis/<timestamp>_<model>/`.
+
+### Seven-category failure taxonomy (`analysis/failure_taxonomy.py`)
+
+Classifies every failed trajectory across the four configurations into one
+of seven categories (Premature Finish, Snap Wrong Answer, Late Wrong
+Answer, Round-Limit Exhaustion, Repetitive Bash, Truncation Handling,
+Other) and prints per-category counts and example task indices. The script
+hardcodes the timestamped run directory (`outputs/2026-04-29-00-01-35/`) at
+the top of the file — change it to point at a different run. Reproduces
+Table 2 of the paper:
+
+```bash
+python analysis/failure_taxonomy.py
+```
+
+### Cross-config rounds histogram (`analysis/rounds_comparison.py`)
+
+Loads all four configurations and produces the comparative
+trajectory-length histogram (Figure 1 of the paper) at
+`analysis/figures/rounds_comparison.png`:
+
+```bash
+python analysis/rounds_comparison.py
+```
 
 ---
 
