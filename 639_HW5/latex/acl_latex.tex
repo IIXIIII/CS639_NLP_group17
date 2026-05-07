@@ -109,14 +109,103 @@
 
 \begin{document}
 \maketitle
-% \begin{abstract}
-% This document is a supplement to the general instructions for *ACL authors. It contains instructions for using the \LaTeX{} style files for ACL conferences.
-% The document itself conforms to its own specifications, and is therefore an example of what your manuscript should look like.
-% These instructions should be used both for papers submitted for review and for final versions of accepted papers.
-% \end{abstract}
+\begin{abstract}
+We study the failure modes of large language model (LLM) agents on
+long-horizon operating system (OS) tasks using the OS domain of
+AgentBench, a 144-task suite in which an agent must translate natural-
+language instructions into bash commands under an 8-round interaction
+cap. We evaluate two proprietary LLM agents, gpt-5.4-nano and
+gemini-2.5-flash, under both the original AgentBench prompt
+(\texttt{os-std}) and an optimized variant (\texttt{os-std-opt}) that
+augments the system message with eight behavioral guidelines targeting
+commonly observed agent failures. The optimized prompt yields task-level
+accuracy gains of $+11.1$ points for gpt-5.4-nano and $+6.9$ points for
+gemini-2.5-flash, but more than half of all 144 tasks still fail under
+every configuration. To explain this gap, we introduce a seven-category
+automatic failure taxonomy that classifies each failed trajectory by
+inspecting its action sequence. Our central finding is that prompt-only
+intervention does not monotonically improve agent behavior; instead, it
+\emph{redistributes} failures across categories: under-exploration
+failures shrink while round-limit exhaustion and repetition loops grow,
+with the dominant failure mode being model-specific.
+\end{abstract}
 
 \section{Introduction}
-This is Intro 1-1.5 pages long.
+
+Large language models (LLMs) are increasingly deployed not as single-shot
+text generators but as \emph{agents} that interact with external
+environments over multiple turns to accomplish complex tasks
+\citep{yao2022react, liu2023agentbench, zhou2023webarena}. A particularly
+demanding setting is the operating system (OS) domain, in which an agent
+must translate a natural-language instruction (e.g., ``recursively set
+all files to read-only except those owned by the current user'') into a
+sequence of bash commands, observe the resulting system output, and
+adapt its strategy until the task is complete. Unlike web or QA agents,
+OS agents operate in a regime where commands are syntactically rigid,
+errors can irreversibly alter system state, and many tasks have a single
+correct numeric answer that is graded by exact match.
+
+The OS domain of AgentBench \citep{liu2023agentbench} provides the
+canonical testbed for this setting: 144 evaluation tasks spanning
+question-answering and state-modifying operations, executed inside
+isolated Docker containers under an 8-round interaction cap. Existing
+results paint a sobering picture: even frontier proprietary LLMs solve
+fewer than half of these tasks under the default prompt, and aggregate
+accuracy alone does not explain \emph{why} they fail. A natural
+follow-up question is whether inference-only interventions---prompt
+engineering, verbal self-reflection \citep{shinn2023reflexion}, or
+iterative self-refinement \citep{madaan2023selfrefine}---can close this
+gap, and if so, by mitigating which specific failure modes.
+
+Prior work has sketched failure-mode taxonomies for adjacent settings.
+ReAct \citep{yao2022react} reports that 47\% of its HotpotQA failures
+take the form of repetitive thought--action loops, motivating
+self-reflection-based interventions. PLAN-AND-ACT
+\citep{erdogan2025plan} diagnoses plan quality, rather than action
+grounding, as the bottleneck for current LLM agents on web tasks.
+However, no comparable taxonomy exists for OS tasks specifically, and it
+is unclear whether interventions that work on QA or web reasoning
+transfer to the rigid syntax and irreversible state of shell command
+execution.
+
+In this paper we replicate AgentBench-OS with two contemporary
+proprietary LLM agents---gpt-5.4-nano and gemini-2.5-flash---and
+systematically characterize the failure modes that survive the strongest
+inference-only intervention available to us: an optimized system prompt
+augmented with eight behavioral guidelines targeting the specific
+pitfalls of the AgentBench-OS environment. We make three contributions:
+
+\begin{enumerate}
+\setlength\itemsep{2pt}
+\item \textbf{A reproducible benchmark replication.} We evaluate
+gpt-5.4-nano and gemini-2.5-flash on all 144 OS tasks under both the
+original AgentBench prompt (\texttt{os-std}) and our optimized variant
+(\texttt{os-std-opt}), yielding 576 task trajectories with full
+\texttt{tool\_calls} traces. The optimized prompt improves task-level
+accuracy by $+11.1$ points for gpt-5.4-nano and $+6.9$ points for
+gemini-2.5-flash.
+
+\item \textbf{An automatic seven-category failure taxonomy.} We classify
+each failed trajectory by inspecting its action sequence in priority
+order, distinguishing premature commitment (Premature Finish, Snap Wrong
+Answer), inadequate exploration (Round-Limit Exhaustion), inadequate
+stopping (Repetitive Bash), and answer-format failures (Late Wrong
+Answer). The taxonomy is rule-based and reproducible from the structured
+log files alone.
+
+\item \textbf{A failure-redistribution finding.} We show that prompt-only
+intervention does not monotonically improve agent behavior; instead, it
+\emph{redistributes} failures across categories. For gpt-5.4-nano,
+under-exploration failures collapse (Premature Finish: $40 \to 2$, Snap
+Wrong Answer: $41 \to 9$) but new failure modes emerge (Round-Limit
+Exhaustion: $2 \to 10$, Repetitive Bash: $2 \to 18$). For
+gemini-2.5-flash, the dominant baseline failure is repetitive bash
+loops, which the optimized prompt mitigates ($28 \to 10$), but at the
+cost of more round-limit exhaustions ($10 \to 21$). The dominant
+failure mode is model-specific, and the marginal gains from prompt
+engineering depend critically on which baseline profile the underlying
+model exhibits.
+\end{enumerate}
 
 \section{Related Work}
 % 0.5-1 page
@@ -192,77 +281,108 @@ architectural interventions for long-horizon OS tasks.
 
 
 \section{Method}
-\subsection{LLM Agent Components}
 
-In our study, the \textbf{LLM Agent} (denoted as \( \mathcal{A} \)) is defined as a system capable of performing tasks in a specific environment \( \mathcal{E} \). The LLM agent comprises the following components:
+We replicate the OS-domain evaluation of \citet{liu2023agentbench} and
+extend it with (i) a comparison between the original AgentBench prompt
+and an optimized prompt variant, and (ii) an automatic seven-category
+failure taxonomy that classifies every failed trajectory by inspecting
+its action sequence. Our analysis is purely inference-time: we do not
+modify model weights or the AgentBench check-script grader.
 
+\subsection{Task Formulation}
+
+Each AgentBench-OS task is a tuple $(q, e_0, c)$ consisting of a natural-
+language instruction $q$, an initial Docker environment state $e_0$, and
+a deterministic check script $c$. Given $q$, the agent operates in an
+8-round interaction loop with three available tools:
+\texttt{bash\_action} (execute a shell command in the container),
+\texttt{answer\_action} (submit a final string answer), and
+\texttt{finish\_action} (declare completion without returning a value,
+used for state-modifying tasks). At each round the environment returns
+the truncated stdout/stderr of the executed command. A task is scored
+as a pass if (a) for QA tasks, the submitted answer string exactly
+matches the reference under the check script, or (b) for operation
+tasks, the post-trajectory environment state passes the check script.
+Trajectories that exceed the 8-round cap or terminate via
+\texttt{finish\_action} without an answer are scored as failures.
+
+\subsection{Prompt Variants}
+\label{sec:prompt_variants}
+
+We evaluate two prompt configurations that differ only in the system
+message; tools, round cap, decoding settings, and grader are identical.
+
+\paragraph{Baseline (\texttt{os-std}).}
+We use the original AgentBench OS system prompt, which establishes the
+role (``a person interacting with a Linux operating system''), specifies
+the tool-calling protocol, requires the agent to ``call exactly one of
+the provided tools'' per turn, and instructs that answers should be
+``exact and precise'' (e.g., a single number).
+
+\paragraph{Optimized (\texttt{os-std-opt}).}
+We append eight additional behavioral guidelines to the baseline system
+message under an ``Additional guidelines'' header. The guidelines target
+failure modes observed in pilot runs and are added verbatim:
 \begin{enumerate}
-    \item \textbf{Language Model} \( \mathcal{LM} \): Responsible for understanding and generating natural language related to the task. The language model is represented as a function \( \mathcal{LM}: \mathcal{I} \to \mathcal{O} \), where \( \mathcal{I} \) is the input space (task description) and \( \mathcal{O} \) is the output space (generated action or response).
-    
-    \item \textbf{Decision-Making and Execution Module} \( \mathcal{D}_E \): Generates the corresponding actions based on the parsed task’s requirements, usually involving command generation or interaction with the environment. This module outputs a sequence of actions \( \mathcal{A}_\text{actions} = \{ a_1, a_2, \dots, a_n \} \), where each \( a_i \in \mathcal{A} \) is a specific command or operation to be executed.
-    
-    \item \textbf{Feedback Module} \( \mathcal{F} \): Monitors the results of the agent’s actions and adjusts subsequent steps to ensure task success. The feedback loop can be modeled as a function \( \mathcal{F}: \mathcal{A}_\text{actions} \to \mathcal{A}_\text{adjustments} \), where adjustments \( \mathcal{A}_\text{adjustments} \) are feedback-driven changes to the agent's future actions.
+\setlength\itemsep{1pt}
+\item Confirm the existence and actual path of any file or directory
+with \texttt{find} or \texttt{ls} before operating on it.
+\item Do not use heredoc syntax (\texttt{<<EOF},
+\texttt{<<\textquotesingle EOF\textquotesingle}, etc.); write files
+using \texttt{printf} or \texttt{echo} redirection.
+\item When the task asks for a script, also execute it and submit the
+actual output, not merely confirmation that the script was created.
+\item Before calling \texttt{answer\_action}, verify the answer with at
+least one cross-check command; do not accept a result of $0$ or empty
+without confirming the target exists.
+\item Do not use \texttt{set -e}, \texttt{set -u}, or
+\texttt{set -o pipefail}, which can cause silent script aborts in this
+environment.
+\item Do not use shell arithmetic expansion \texttt{echo \$((expr))},
+which returns empty output in this environment; use
+\texttt{python3 -c} or \texttt{expr} instead.
+\item Commit to a consistent result: if two independent methods agree,
+call \texttt{answer\_action} immediately, and never re-run the same or
+equivalent query more than twice.
+\item The submitted answer must be a plain value only, with no
+equations, labels, or intermediate steps (e.g., submit
+\texttt{100}, not \texttt{4+13+83=100}).
 \end{enumerate}
 
-For each OS-related task, the goal is to assess whether the LLM agent \( \mathcal{A} \) can correctly understand the task and execute the appropriate actions. Specifically, the evaluation process involves the following steps:
+These guidelines are designed to mitigate distinct failure modes:
+guidelines~1, 4, and 7 target premature commitment and snap wrong
+answers; guideline~7 also constrains repetitive bash loops; guideline~8
+addresses format-induced wrong answers (e.g., trajectories that compute
+the right number but submit it in an ungraded form); and
+guidelines~2, 5, and 6 address shell-execution pitfalls specific to the
+AgentBench Docker environment.
 
-\subsection{OS Task Question and Answer Testing}
+\subsection{Failure-Mode Classification}
+\label{sec:method_taxonomy}
 
-The testing procedure for OS tasks can be formalized as follows:
+For each failed trajectory we apply an automatic rule-based classifier
+that assigns exactly one of seven categories by inspecting the agent's
+action sequence in priority order: \emph{Premature Finish},
+\emph{Snap Wrong Answer}, \emph{Late Wrong Answer},
+\emph{Round-Limit Exhaustion}, \emph{Repetitive Bash},
+\emph{Truncation Handling}, and \emph{Other}. The full category
+definitions and the rationale for the priority order are given in
+Section~\ref{sec:failure_taxonomy}. The classifier operates on the
+structured \texttt{tool\_calls} sequence stored in each
+\texttt{runs.jsonl} record, which makes it deterministic and
+reproducible from the trajectory logs alone---no human labeling is
+required.
 
-\begin{enumerate}
-    \item \textbf{Question Input} \( q \in \mathcal{Q} \): We provide the LLM agent with a specific OS task question \( q \), for example, “Recursively set all files to read-only, except for mine, on an Ubuntu system.” The space \( \mathcal{Q} \) represents all possible OS task questions.
-    
-    \item \textbf{LLM Response Generation} \( r = \mathcal{LM}(q) \): The LLM agent generates a response \( r \), typically a command or a series of instructions, based on the given task. The response function \( \mathcal{LM} \) generates an action sequence \( r \) that corresponds to solving the task.
-    
-    \item \textbf{Answer Comparison} \( \mathcal{C}: \mathcal{O} \times \mathcal{O} \to \{0, 1\} \): We compare the agent’s generated response \( r \) to a predefined correct answer \( r^* \). The comparison function \( \mathcal{C} \) outputs 1 if the generated response \( r \) is correct, and 0 otherwise.
-\end{enumerate}
+\subsection{Models and Inference Settings}
 
-The correctness of the response is defined by the function \( \mathcal{C} \), which evaluates whether the LLM-generated answer matches the expected output \( r^* \) based on task requirements.
-
-\subsection{Filtering Incorrect Answers and Manual Categorization}
-
-During the experiment, we will filter out all incorrect responses and perform manual categorization and analysis to identify common failure modes. The categorization process involves the following steps:
-
-\begin{enumerate}
-    \item \textbf{Command Formatting Errors}: We check if the generated command \( r \) matches the required format \( f_{\text{format}} \), where \( f_{\text{format}}(r) = 1 \) if the command follows the required format, and \( f_{\text{format}}(r) = 0 \) otherwise.
-    
-    \item \textbf{Invalid Commands or Actions}: We validate if the command \( r \) is recognized by the operating system or environment. The validity function \( f_{\text{valid}}(r) = 1 \) if \( r \) is a valid command, and \( f_{\text{valid}}(r) = 0 \) otherwise.
-    
-    \item \textbf{Lack of Multi-Turn Interaction}: For tasks requiring multiple interactions, we check whether the agent maintains context between turns. This is assessed using the function \( f_{\text{multi-turn}}(r) = 1 \) if the agent correctly follows through on multi-turn task requirements, and \( f_{\text{multi-turn}}(r) = 0 \) if it does not.
-    
-    \item \textbf{Logical Reasoning Errors}: We evaluate whether the agent’s actions follow a logical sequence. The reasoning validity function \( f_{\text{logic}}(r) = 1 \) if the agent's sequence of actions is logically correct, and \( f_{\text{logic}}(r) = 0 \) if it is not.
-\end{enumerate}
-
-Each incorrect answer is categorized according to one of the above error types. We then analyze the root causes of these errors and provide potential solutions.
-
-\subsection{Error Analysis and Improvement Strategies}
-
-For the analysis of the errors, we will use the following strategies:
-\begin{enumerate}
-\item \textbf{Embedding Similarity-Based Categorization}: We calculate the embedding similarity \( \mathcal{S}(r, r^*) \) between the agent’s response \( r \) and the correct answer \( r^* \) using cosine similarity, where:
-    \[
-    \mathcal{S}(r, r^*) = \frac{\mathbf{r} \cdot \mathbf{r}^*}{\|\mathbf{r}\| \|\mathbf{r}^*\|}
-    \]
-    If \( \mathcal{S}(r, r^*) \) is below a certain threshold, we classify the response as incorrect.
-    
-\item \textbf{Manual Categorization}: We manually analyze the generated responses and classify errors into the categories described above. This classification helps in identifying specific patterns and common issues.
-\end{enumerate}
-
-\subsection{Improvement Strategies}
-
-To improve task accuracy, we propose and plan to implement the following methods:
-
-\begin{enumerate}
-    \item Enhanced Instruction Following: Augmenting the training dataset with more diverse and task-specific instruction-following examples. This can be formalized as expanding the dataset \( D_{\text{train}} \) to include more OS-related task prompts and their correct command sequences, thereby improving the model’s ability to follow precise instructions.
-    
-    \item Reinforcement Learning: Applying reinforcement learning (RL) to fine-tune the agent’s decision-making process. The RL objective can be modeled as maximizing the cumulative reward \( R_{\text{total}} \) over the task execution, where:
-    \[
-    R_{\text{total}} = \sum_{t=1}^{T} \gamma^{t-1} R_t
-    \]
-    with \( \gamma \) being the discount factor and \( R_t \) being the reward at time step \( t \).
-    
-\end{enumerate}
+We evaluate two proprietary LLM agents accessed via their respective
+chat APIs: \textbf{gpt-5.4-nano} (an OpenAI ChatCompletion endpoint) and
+\textbf{gemini-2.5-flash} (a Google GenAI endpoint). Both models support
+function-calling, which is required for the AgentBench tool-call
+protocol, and are queried with deterministic decoding settings. Each
+model is run on all 144 OS tasks under both prompt variants, yielding
+four configurations and a total of $4 \times 144 = 576$ task
+trajectories.
 
 
 \section{Experiment}
@@ -470,8 +590,41 @@ Across all four configurations, $33$--$39$ tasks fail at the 8-round cap. Manual
 Our current evaluation uses two proprietary, closed-weights models. To assess whether the failure-redistribution pattern is intrinsic to the OS domain or specific to these systems, we plan to extend the evaluation to open-weights models in the same parameter range. The taxonomy in Table~\ref{tab:failure_modes} is designed to accept additional rows without modification.
 
 \section{Conclusion}
-This is conclusion.
-\textcolor{red}{Summarization and limitation.}
+
+We replicated the AgentBench-OS evaluation with two contemporary
+proprietary LLMs and analyzed the impact of an optimized system prompt
+augmented with eight behavioral guidelines. The optimized prompt yields
+consistent task-level accuracy gains over the AgentBench baseline
+($+11.1$ points for gpt-5.4-nano and $+6.9$ points for
+gemini-2.5-flash), but more than half of the 144 tasks remain unsolved
+under every configuration we tested. Beyond aggregate accuracy, our
+seven-category automatic failure taxonomy reveals that prompt-only
+interventions do not monotonically improve agent behavior; instead,
+they \emph{redistribute} failures across categories, with the specific
+redistribution being highly model-dependent. gpt-5.4-nano's dominant
+baseline failure is under-exploration, which the optimized prompt
+collapses---but at the cost of new round-limit and repetition
+failures. gemini-2.5-flash's dominant baseline failure is repetitive
+bash loops, which the optimized prompt mitigates with smaller
+side-effects. The presence of a hard-task ceiling ($33$--$39$ tasks
+fail at the round cap across all four configurations) suggests that no
+amount of prompt engineering will close the remaining gap, and that
+planner-decomposed agents \citep{erdogan2025plan} or environment-grounded
+training are necessary next steps.
+
+\paragraph{Limitations.}
+Our study has three principal limitations. First, both evaluated models
+are proprietary and closed-weights; whether the failure-redistribution
+pattern is intrinsic to the OS domain or specific to these systems
+remains an empirical question that requires evaluation on open-weights
+models in the same parameter range. Second, our optimized prompt was
+hand-tuned in a small pilot study and is not necessarily Pareto-optimal;
+automated prompt search may yield further gains, and the specific
+guidelines we use may interact with idiosyncratic features of the
+AgentBench Docker environment. Third, our 8-round interaction cap
+follows the AgentBench convention but is short relative to the genuine
+difficulty of some hard-task tail cases; the round-limit-exhaustion
+category may partially reflect this cap rather than agent capability.
 
 
 
