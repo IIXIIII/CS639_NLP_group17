@@ -5,7 +5,11 @@
       "Bash(powershell -Command \"Expand-Archive -Force 'LuaLaTeX_and_XeLaTeX_Template_for__ACL_Style_Files\\(1\\).zip' -DestinationPath '_acl_template_tmp'\")",
       "Bash(python -c \"import sys, json; d=json.loads\\(sys.stdin.read\\(\\)\\); print\\('top keys:', list\\(d.keys\\(\\)\\)\\); print\\(\\); print\\('first 1500 chars:'\\); print\\(json.dumps\\(d, indent=2\\)[:1500]\\)\")",
       "Bash(python -c ' *)",
-      "Bash(python analysis/failure_taxonomy.py)"
+      "Bash(python analysis/failure_taxonomy.py)",
+      "Bash(where pdflatex *)",
+      "Bash(where latexmk *)",
+      "Bash(where xelatex *)",
+      "Bash(latexmk -pdf -interaction=nonstopmode acl_latex.tex)"
     ]
   }
 }

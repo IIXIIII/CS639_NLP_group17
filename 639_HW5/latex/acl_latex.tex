@@ -36,6 +36,13 @@
 %additional package(s)
 \usepackage{graphicx}
 
+% For inline-coded plots (Figure 1: rounds distribution).
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots}
+\definecolor{stdblue}{HTML}{4C72B0}
+\definecolor{optorange}{HTML}{DD8452}
+
 % If the title and author information does not fit in the area allocated, uncomment the following
 %
 %\setlength\titlebox{<dim>}
@@ -114,24 +121,72 @@ This is Intro 1-1.5 pages long.
 \section{Related Work}
 % 0.5-1 page
 
-The evaluation and training of LLM-based agents on interactive tasks has advanced rapidly along two parallel tracks: benchmark construction and agent training methodology.
+The evaluation and improvement of LLM-based agents on interactive tasks has
+advanced along three closely related lines: benchmark construction,
+reasoning-and-acting interaction paradigms, and inference-only improvement
+strategies based on prompting and memory. However, existing work does not
+fully characterize which inference-only interventions mitigate specific
+failure modes in operating system task execution.
 
 \paragraph{Benchmarks for web and digital agents.}
-\citet{deng2023mind2web} established the first large-scale generalist web agent benchmark, collecting 2,350 tasks across 137 real-world websites with a three-level generalization protocol (Cross-Task, Cross-Website, Cross-Domain). Even GPT-4 achieves only approximately 36\% step success rate under in-context learning, confirming that generalization to unseen environments is the primary challenge. \citet{zhou2023webarena} addressed Mind2Web's offline evaluation limitation by deploying four self-hosted, fully functional websites in reproducible Docker containers, enabling live environment interaction. Its programmatic reward functions assess functional correctness by inspecting post-execution system states rather than matching action sequences. The best agent (GPT-4 + CoT) achieves only 14.41\% success versus a 78.24\% human baseline, directly quantifying the capability gaps that \citet{liu2023agentbench}, a contemporaneous multi-environment framework, is designed to characterize across a broader range of task types.
+\citet{deng2023mind2web} introduced a large-scale generalist web agent
+benchmark with 2,350 tasks across 137 real-world websites. Even GPT-4
+achieves only approximately 36\% step success rate under in-context
+learning, showing that generalization to unseen digital environments remains
+difficult. \citet{zhou2023webarena} addressed the limitation of offline web
+evaluation by deploying self-hosted, fully functional websites in
+reproducible Docker containers and evaluating agents through programmatic
+state inspection rather than action-sequence matching. The best GPT-4-based
+agent in WebArena achieves only 14.41\% success, far below the 78.24\%
+human baseline, indicating that live digital environments remain challenging
+even for frontier models. \citet{liu2023agentbench} extends this benchmark
+perspective to a broader set of environments, including the operating
+system domain that is the focus of our replication.
 
 \paragraph{Reasoning and acting paradigms.}
-\citet{yao2022react} provides the foundational interaction paradigm underlying both WebArena and AgentBench. By augmenting the action space with free-form ``thought'' tokens, ReAct interleaves reasoning traces with environment actions, implementing an implicit working memory without gradient updates. On ALFWorld it achieves 71\% success rate, outperforming Act-only baselines by 34 percentage points. However, ReAct exhibits a characteristic failure mode where repetitive thought-action loops account for 47\% of failures on HotpotQA, motivating stronger training-time interventions. The Thought-Action-Observation trajectory format ReAct establishes is the shared interface on which AgentBench, LOOP, and PLAN-AND-ACT all build.
+\citet{yao2022react} introduced ReAct, a reasoning-and-acting framework
+that interleaves free-form ``thought'' tokens with environment actions.
+This format gives the agent an implicit working memory without parameter
+updates and has become a useful conceptual template for later agent
+frameworks. However, ReAct also reveals a characteristic failure mode:
+repetitive thought--action loops account for 47\% of its failures on
+HotpotQA, motivating stronger inference-time interventions such as
+self-reflection, memory augmentation, and explicit planning. The
+Thought--Action--Observation trajectory format introduced by ReAct serves
+as the shared interaction interface on which AgentBench and most
+subsequent agent frameworks build, and is also the format under which our
+experiments operate.
 
+\paragraph{Prompt-based and memory-augmented agent improvement.}
+A complementary line of work improves LLM agents without updating model
+parameters. \citet{shinn2023reflexion} propose Reflexion, which augments
+ReAct with a verbal self-reflection step: after a failed trajectory, the
+agent writes a natural-language critique and stores it in an episodic
+memory buffer that conditions later attempts, yielding substantial gains
+over ReAct on AlfWorld decision-making and HotpotQA reasoning, and
+reaching 91\% Pass@1 on HumanEval (an 11-point absolute improvement over
+GPT-4). \citet{madaan2023selfrefine} develop Self-Refine, in which a
+single LLM iteratively generates, critiques, and revises its own output
+without supervised training or reinforcement learning, achieving roughly
+a 20-point absolute improvement averaged across seven generation tasks.
+\citet{erdogan2025plan} take a complementary architectural approach with
+PLAN-AND-ACT, decomposing the agent into a \textsc{Planner} that produces
+structured plans and an \textsc{Executor} that grounds them into actions.
+A central finding is that even an untrained \textsc{Executor} improves by
+34 percentage points on WebArena-Lite when paired with a high-quality
+\textsc{Planner}, suggesting that plan quality, not action grounding, is
+often the binding constraint for current LLM-based agents.
 
-
-
-\paragraph{Training agents for long-horizon tasks.}
-
-
-\textcolor{red}{We need to change here, Our work didn't use training, find some prompt engineering related, or agent memory update related work}
-
-\citet{chen2025reinforcement} trains interactive digital agents via reinforcement learning directly in the target environment, using only a task-completion reward on 24 training scenarios. Its Leave-One-Out PPO algorithm eliminates the value network and applies per-token importance weighting for stable gradient updates. A 32B model trained with LOOP outperforms OpenAI o1 by approximately 9 percentage points on AppWorld, with behavioral analysis confirming concrete improvements: open-loop code submission decreases approximately 6 times, unwarranted assumptions decrease approximately 30 times, and post-failure task abandonment decreases approximately 3 times. \citet{erdogan2025plan} takes a complementary approach through architectural decomposition, where a PLANNER decomposes queries into structured steps while an EXECUTOR grounds them into concrete actions, with dynamic replanning applied after each step. A scalable synthetic data pipeline generates 10,000 query-plan pairs in under an hour without manual annotation. On WebArena-Lite the full system reaches 57.58\%, and a key finding is that even an untrained EXECUTOR improves by 34 percentage points when paired with a high-quality PLANNER, identifying plan quality as the binding constraint in current LLM-based agents.\\
-Together, these works form a coherent arc from benchmark construction \citep{deng2023mind2web, zhou2023webarena}, to interaction paradigm \citep{yao2022react}, to environment-grounded training \citep{chen2025reinforcement, erdogan2025plan}, providing the theoretical and empirical foundation that our replication of \citet{liu2023agentbench} is positioned to systematically validate and extend across a unified multi-environment evaluation framework.
+\paragraph{Position of our work.}
+Together, these works provide the benchmark, interaction, and
+inference-time improvement foundations for our study. Building on the OS
+domain of \citet{liu2023agentbench}, our work examines not only whether
+prompt- and memory-based interventions improve task success, but also
+which categories of failure they actually mitigate in shell command
+execution. Our analysis reveals that such prompt-only interventions tend
+to redistribute failures across categories rather than monotonically
+improve agent behavior, motivating more targeted training-time or
+architectural interventions for long-horizon OS tasks.
 
 
 
@@ -281,6 +336,68 @@ gemini-2.5-flash   & 42.4\% & 49.3\% & $+6.9$  \\
 \label{tab:accuracy}
 \end{table}
 
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{groupplot}[
+  group style={group size=1 by 2, vertical sep=1.05cm},
+  width=\columnwidth,
+  height=4.4cm,
+  ybar,
+  bar width=4.5pt,
+  ymin=0,
+  enlarge x limits=0.08,
+  xtick={1,2,3,4,5,6,7,8},
+  ylabel={\# Tasks},
+  ylabel style={font=\small},
+  tick label style={font=\footnotesize},
+  legend style={font=\footnotesize, draw=none, fill=none,
+                /tikz/every even column/.append style={column sep=4pt}},
+  title style={font=\small, yshift=-3pt},
+  every axis plot/.append style={draw=white, line width=0.3pt},
+]
+
+\nextgroupplot[
+  title={gpt-5.4-nano \quad mean rounds: std=2.79, opt=5.55},
+  ymax=120,
+  legend pos=north east,
+  nodes near coords,
+  nodes near coords style={font=\tiny, /pgf/number format/precision=0,
+                           /pgf/number format/fixed},
+]
+\addplot[fill=stdblue]    coordinates {(1,1)(2,101)(3,15)(4,5)(5,11)(6,4)(7,1)(8,6)};
+\addplot[fill=optorange]  coordinates {(1,0)(2,16)(3,16)(4,16)(5,22)(6,17)(7,13)(8,44)};
+\legend{std, opt}
+
+\nextgroupplot[
+  title={gemini-2.5-flash \quad mean rounds: std=4.33, opt=4.57},
+  ymax=72,
+  xlabel={Number of interaction rounds},
+  xlabel style={font=\small},
+  legend pos=north east,
+  nodes near coords,
+  nodes near coords style={font=\tiny, /pgf/number format/precision=0,
+                           /pgf/number format/fixed},
+]
+\addplot[fill=stdblue]    coordinates {(1,1)(2,61)(3,20)(4,7)(5,4)(6,5)(7,5)(8,41)};
+\addplot[fill=optorange]  coordinates {(1,0)(2,37)(3,30)(4,13)(5,20)(6,3)(7,4)(8,37)};
+\legend{std, opt}
+
+\end{groupplot}
+\end{tikzpicture}
+\caption{Trajectory length distribution under the baseline (\texttt{os-std})
+versus optimized (\texttt{os-std-opt}) prompt for both models. The optimized
+prompt does not uniformly extend trajectories: gpt-5.4-nano shifts mass
+dramatically out of round~2 ($101 \rightarrow 16$) and into the 8-round cap
+($6 \rightarrow 44$), nearly doubling its mean trajectory length
+($2.79 \rightarrow 5.55$). gemini-2.5-flash, which already exhibited a
+bimodal distribution under the baseline, shows a smaller redistribution
+(mean $4.33 \rightarrow 4.57$). The new mass at round~8 corresponds to
+round-limit exhaustion failures, which the taxonomy in
+Section~\ref{sec:failure_taxonomy} quantifies.}
+\label{fig:rounds}
+\end{figure}
+
 \subsection{Failure-Mode Taxonomy}
 \label{sec:failure_taxonomy}
 
@@ -325,7 +442,7 @@ Total failed                   & 93 & 77 & $-16$ & 83 & 73 & $-10$ \\
 
 \subsection{What the Improved Prompt Mitigates}
 
-The two models exhibit qualitatively different baseline failure profiles, and the optimized prompt acts on each profile differently.
+As Figure~\ref{fig:rounds} visualizes at the trajectory-length level, the two models exhibit qualitatively different baseline failure profiles, and the optimized prompt acts on each profile differently.
 
 \paragraph{gpt-5.4-nano: under-exploration is the dominant failure.}
 Under \texttt{os-std}, $87\%$ of failures (81/93) are accounted for by just two categories, both reflecting under-exploration: the agent either calls \texttt{finish\_action} after a single bash call (PF, $n{=}40$) or commits to an answer in the first 1--2 rounds (SWA, $n{=}41$). The model averaged only $2.79$ rounds per trajectory and $101/144$ tasks terminated by round~2. Adding the eight behavioral guidelines collapses these two categories simultaneously (PF: $40\to 2$, SWA: $41\to 9$), accounting for the entire $+11.1$-point accuracy gain.
